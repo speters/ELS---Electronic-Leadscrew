@@ -9,7 +9,7 @@ dir_bin=C:\PROJECTS\ELeadscrew\PIC18Code\SRC\Output
 dir_tmp=C:\Projects\ELeadscrew\PIC18Code\SRC\Output
 dir_sin=
 dir_inc=C:\Projects\ELeadscrew\PIC18Code\INCLUDE;C:\Program Files\Microchip\mcc18\h
-dir_lib=C:\PROJECTS\ELeadscrew\PIC18Code\LIB;C:\MCC18\lib
+dir_lib=C:\PROJECTS\ELeadscrew\PIC18Code\LIB;C:\Program Files\Microchip\MCC18\lib
 dir_lkr=C:\PROJECTS\ELeadscrew\PIC18Code\SRC
 [CAT_FILTERS]
 filter_src=*.asm;*.c

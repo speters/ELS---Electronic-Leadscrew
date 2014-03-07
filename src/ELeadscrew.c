@@ -912,10 +912,11 @@ SerialThread(void) {
 			printf((MEM_MODEL rom char *)"PORT B =%02X\n",PORTB);
 			break;
 
+#ifdef TRACK_SPINDLE_SPEED
 		case 't' :	// Spindle Tracking variables.
 			printf((MEM_MODEL rom char *)"SpinRate\n",SpinRate);
 			break;
-			
+#endif			
 
 		/*
 			's' Status Flags

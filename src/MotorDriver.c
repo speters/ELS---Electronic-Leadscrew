@@ -503,7 +503,9 @@ MotorMoveDistance( int8 device, 	// Motor X or Z
 #ifdef TRACK_SPINDLE_SPEED
 					// Spindle Speed tracking variables get set up.  They can be done outside the interrupt
 					// routine because they aren't being used until fThreading is 1.
-					SpinRate = LastSpindleClocks;	// Get spindle clocks value used to calculate stepper rate.
+					SpinRate = AveragedClocksPerRev; // 16MAR12 -- jcd -- Use average value since it's also used to 
+													 // calculate stepper motor rate.
+					// SpinRate = LastSpindleClocks;	// Get spindle clocks value used to calculate stepper rate.
 					SpinClip = SpinRate >> 1;		// Calculate ceiling to prevent overruns.
 					NegSpinRate = 0-SpinRate;		// Make the negative for faster calculation in interrupt routine.
 #endif

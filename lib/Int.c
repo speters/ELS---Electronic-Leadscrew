@@ -552,27 +552,27 @@ __INTH(void) {
 #ifdef TRACK_SPINDLE_SPEED
 			if ( fThreading && fZUpToSpeed ) {	// If up to speed allow adding in of ZVel into ZHolding register.
 				SpinAdder += SpinCorrection;	// 
-				if (SpinAdder > SpinRate) 		// If we've overflowed, then don't allow the addition which is like skipping one clock period.
+// 16MAR12 -- jcd -- Change to >= so SpinAddr doesn't slowly accumulate
+				if (SpinAdder >= SpinRate) 		// If we've overflowed, then don't allow the addition which is like skipping one clock period.
+				//if (SpinAdder > SpinRate) 		// If we've overflowed, then don't allow the addition which is like skipping one clock period.
 					SpinAdder -= SpinRate;
 				else
-			    	Zholder += (ZVel >> 16); // holder is the main Bresenham variable count, it rolls over PULSE_POINT when a pulse is necessary.
+			    	Zholder += (ZVel >> 16); // holder is the main Bresenham variable count, it rolls over PULSE_CLOCK_RATE when a pulse is necessary.
 
-/*
-				if (SpinAdder < NegSpinRate)
-					SpinAdder = NegSpinRate; 
-*/
-				if (SpinAdder < NegSpinRate) { // If Spindle is turning faster, than this will make the step happen sooner.
+// 16MAR12 -- jcd -- Change to <= so SpinAddr doesn't slowly accumulate
+				if (SpinAdder <= NegSpinRate) { // If Spindle is turning faster, than this will make the step happen sooner.
+				//if (SpinAdder < NegSpinRate) { // If Spindle is turning faster, than this will make the step happen sooner.
 					SpinAdder += SpinRate; 		
-			    	Zholder += (ZVel >> 16); // holder is the main Bresenham variable count, it rolls over PULSE_POINT when a pulse is necessary.
+			    	Zholder += (ZVel >> 16); // holder is the main Bresenham variable count, it rolls over PULSE_CLOCK_RATE when a pulse is necessary.
 				}
 
 
 			}
 			else	// Not up to speed so just allow acceleration to happen.
 #endif
-	    		Zholder += (ZVel >> 16); // holder is the main Bresenham variable count, it rolls over PULSE_POINT when a pulse is necessary.
+	    		Zholder += (ZVel >> 16); // holder is the main Bresenham variable count, it rolls over PULSE_CLOCK_RATE when a pulse is necessary.
 	
-	    	if( Zholder >= PULSE_CLOCK_RATE ) { // PULSE_POINT = inverse of our interrupt period -- maximum step frequency.
+	    	if( Zholder >= PULSE_CLOCK_RATE ) { // PULSE_CLOCK_RATE = inverse of our interrupt period -- maximum step frequency.
 				// In the following code we potentially invert the direction bit but only do that once. (faster interrupt routine)
 				// Then determine if direction has changed and also set the new direction
 				if ((fZDirectionCmd ^ fMZInvertDirMotor) == MOVE_RIGHT)  { // Test possible new direction of motor.

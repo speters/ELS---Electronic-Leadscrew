@@ -253,6 +253,11 @@
 			-- Changed to ZBeginPositionSteps = ZDistanceToSteps(ZBeginPosition); from using 
 				THREAD_BEGIN_NDX and same with EndPosition.  Symptom was sometimes METRIC mode would have
 				the imperial values.
+	1.10i 	jcd -- 25MAR12
+			--  Research into why long threads change pitch from pass to pass.
+			--	During tracking in interrupt code change to >= so SpinAddr doesn't slowly accumulate
+			--  Use Average values for clocks per rev rather than the last accumulated one so that 
+				base threading RPM starts from average rather than an outlying point.
 
 */
 // Config.h -- Project specific definitions like Crystal frequencies, Port allocations.
@@ -264,13 +269,13 @@
 // Deal with processors differences between board revisions.
 #if defined(__18F4620)
 	// Through Hole Processor for boards above Rev 0.30	
-#define pstrSignOn  "     E-LEADSCREW    Ver PIC18F4620 1.10h"
+#define pstrSignOn  "     E-LEADSCREW    Ver PIC18F4620 1.10i"
 #elif defined(__18F4680)
 	//	QFP processor for boards Rev 0.20 or lower and Rev. 0.30 Through Hole processors
-#define pstrSignOn  "     E-LEADSCREW    Ver PIC18F4680 1.10h"
+#define pstrSignOn  "     E-LEADSCREW    Ver PIC18F4680 1.10i"
 #elif defined(__18F4685)
 	//	QFP processor for boards Rev 0.20 or lower and Rev. 0.30 Through Hole processors
-#define pstrSignOn  "     E-LEADSCREW    Ver PIC18F4685 1.10h"
+#define pstrSignOn  "     E-LEADSCREW    Ver PIC18F4685 1.10i"
 #endif
 
 // #define FULL_DIAGNOSTICS			1		// Makes DEBUGSTR into printf so diagnostics show up on serial port.
